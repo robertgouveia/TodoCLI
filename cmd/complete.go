@@ -18,7 +18,8 @@ var completedTodo = &cobra.Command{
 		}
 		for _, todo := range todos {
 			if todo.Done {
-				fmt.Printf("✅ %s\n", todo.Title)
+				// green color fmt.Print("\033[32m✔ ")
+				fmt.Printf("\033[32m✔ %s\n", todo.Title)
 			}
 		}
 	},
