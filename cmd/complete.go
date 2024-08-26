@@ -16,12 +16,20 @@ var completedTodo = &cobra.Command{
 			fmt.Println(err)
 			return
 		}
-		for _, todo := range todos {
+
+		tbl := returnTable()
+		completed := 0
+		for i, todo := range todos {
 			if todo.Done {
-				// green color fmt.Print("\033[32m✔ ")
-				fmt.Printf("\033[32m✔ %s\n", todo.Title)
+				completed++
+				tbl.AddRow(i, "✔ "+todo.Title, todo.Created)
 			}
 		}
+		if completed == 0 {
+			fmt.Println("No completed todos found")
+			return
+		}
+		tbl.Print()
 	},
 }
 

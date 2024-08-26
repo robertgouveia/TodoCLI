@@ -19,22 +19,23 @@ var todoList = &cobra.Command{
 			return
 		}
 
+		tbl := returnTable()
+
 		if len(todos) == 0 {
 			fmt.Println("No todos found")
 			return
 		}
 
 		if num == 0 {
-			for _, todo := range todos {
+			for i, todo := range todos {
 				if todo.Done {
-					fmt.Print("\033[32m✔ ")
+					tbl.AddRow(i, "✔ "+todo.Title, todo.Created)
 				} else {
-					fmt.Print("\033[31m❌")
+					tbl.AddRow(i, "❌"+todo.Title, todo.Created)
 				}
-				fmt.Println(todo.Title)
 			}
 
-			return
+			tbl.Print()
 		} else {
 			if num > len(todos) {
 				fmt.Println("Error: Not enough todos")
@@ -44,6 +45,7 @@ var todoList = &cobra.Command{
 			for i := 1; i <= num; i++ {
 				fmt.Println(todos[i-1].Title)
 			}
+			tbl.Print()
 		}
 	},
 }

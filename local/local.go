@@ -8,8 +8,9 @@ import (
 )
 
 type Todo struct {
-	Title string
-	Done  bool
+	Title   string
+	Done    bool
+	Created string
 }
 
 func checkIndex(index int, todos []Todo) error {

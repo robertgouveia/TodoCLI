@@ -2,6 +2,8 @@ package cmd
 
 import (
 	"fmt"
+	"time"
+
 	"github.com/robertgouveia/TodoCLI/local"
 	"github.com/spf13/cobra"
 )
@@ -22,6 +24,7 @@ var add = &cobra.Command{
 		}
 		todo.Title = title
 		todo.Done = done
+		todo.Created = time.Now().Format("2006-01-02 15:04:05")
 
 		err := local.SaveTodos(todo)
 		if err != nil {
