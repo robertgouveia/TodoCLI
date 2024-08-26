@@ -9,21 +9,22 @@ import (
 )
 
 var title string
-var done bool
 
 var add = &cobra.Command{
 	Use:   "add",
 	Short: "Add a new todo",
-	Args:  cobra.NoArgs,
+	Args:  cobra.MinimumNArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 		var todo local.Todo
 
+		title = args[0]
+
 		if title == "" {
-			fmt.Println("Error: Missing title flag")
+			fmt.Println("Please provide a title for the todo")
 			return
 		}
 		todo.Title = title
-		todo.Done = done
+		todo.Done = false
 		todo.Created = time.Now().Format("2006-01-02 15:04:05")
 
 		err := local.SaveTodos(todo)
@@ -36,7 +37,5 @@ var add = &cobra.Command{
 }
 
 func init() {
-	add.Flags().StringVarP(&title, "title", "t", "", "Title of the todo")
-	add.Flags().BoolVarP(&done, "done", "d", false, "Status of the todo")
 	rootCmd.AddCommand(add)
 }

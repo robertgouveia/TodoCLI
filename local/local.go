@@ -14,7 +14,7 @@ type Todo struct {
 }
 
 func checkIndex(index int, todos []Todo) error {
-	if index > len(todos) {
+	if index >= len(todos) {
 		return errors.New("Index out of range")
 	}
 	return nil
@@ -69,8 +69,6 @@ func RemoveTodos(index int) error {
 		return err
 	}
 
-	index--
-
 	err = checkIndex(index, todos)
 	if err != nil {
 		return err
@@ -91,19 +89,18 @@ func RemoveTodos(index int) error {
 	return os.WriteFile(StorageFile, data, 0644)
 }
 
-func UpdateTodos(index int, done bool) error {
+func CompleteTodo(index int) error {
 	todos, err := LoadTodos()
 	if err != nil {
 		return err
 	}
 
-	index--
 	err = checkIndex(index, todos)
 	if err != nil {
 		return err
 	}
 
-	todos[index].Done = done
+	todos[index].Done = true
 
 	data, err := json.MarshalIndent(todos, "", "  ")
 	if err != nil {

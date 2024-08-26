@@ -7,7 +7,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var num = 0
+var all bool
 
 var todoList = &cobra.Command{
 	Use:   "list",
@@ -26,32 +26,26 @@ var todoList = &cobra.Command{
 			return
 		}
 
-		if num == 0 {
-			for i, todo := range todos {
-				if todo.Done {
-					tbl.AddRow(i, "✔ "+todo.Title, todo.Created)
-				} else {
-					tbl.AddRow(i, "❌"+todo.Title, todo.Created)
-				}
+		count := 0
+		for i, todo := range todos {
+			if !todo.Done {
+				count++
+				tbl.AddRow(i, "❌"+todo.Title, todo.Created)
+			} else if all {
+				tbl.AddRow(i, "✔ "+todo.Title, todo.Created)
 			}
-
-			tbl.Print()
-		} else {
-			if num > len(todos) {
-				fmt.Println("Error: Not enough todos")
-				return
-			}
-
-			for i := 1; i <= num; i++ {
-				fmt.Println(todos[i-1].Title)
-			}
-			tbl.Print()
 		}
+		if !all && count == 0 {
+			fmt.Println("No incomplete todos, try running with --all flag")
+			return
+		}
+
+		tbl.Print()
 	},
 }
 
 func init() {
-	todoList.Flags().IntVarP(&num, "num", "n", 0, "Number of Todos")
+	todoList.Flags().BoolVarP(&all, "all", "a", false, "List all todos")
 
 	rootCmd.AddCommand(todoList)
 }
