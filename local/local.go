@@ -39,3 +39,21 @@ func LoadTodos() ([]Todo, error) {
 
 	return todos, nil
 }
+
+func SaveTodos(todo Todo) error {
+	//json insert todo
+	todos, err := LoadTodos()
+	if err != nil {
+		return err
+	}
+	todos = append(todos, todo)
+
+	data, err := json.MarshalIndent(todos, "", "  ")
+	//indent with 2 spaces
+
+	if err != nil {
+		return err
+	}
+
+	return os.WriteFile(StorageFile, data, 0644)
+}
