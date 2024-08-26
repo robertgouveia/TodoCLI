@@ -13,7 +13,7 @@ var rootCmd = &cobra.Command{
 	Use:   "todo-cli",
 	Short: "A Simple Todo CLI",
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("Todo CLI")
+		fmt.Println("Try todo-cli --help for more information")
 	},
 }
 
