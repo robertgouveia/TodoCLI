@@ -12,6 +12,7 @@ var done bool
 var add = &cobra.Command{
 	Use:   "add",
 	Short: "Add a new todo",
+	Args:  cobra.NoArgs,
 	Run: func(cmd *cobra.Command, args []string) {
 		var todo local.Todo
 

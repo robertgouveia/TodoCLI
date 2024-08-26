@@ -1,18 +1,10 @@
 [
   {
-    "Title": "Buy Milk",
-    "Done": false
-  },
-  {
-    "Title": "Buy Eggs",
+    "Title": "Do the washing",
     "Done": true
   },
   {
-    "Title": "Buy Bread",
-    "Done": false
-  },
-  {
-    "Title": "Example",
+    "Title": "Not done yet",
     "Done": false
   }
 ]

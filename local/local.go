@@ -2,8 +2,8 @@ package local
 
 import (
 	"encoding/json"
+	"errors"
 	"os"
-	"path/filepath"
 )
 
 type Todo struct {
@@ -11,14 +11,10 @@ type Todo struct {
 	Done  bool
 }
 
-var StorageFile = filepath.Join(os.Getenv("Desktop"), "todo.json")
+var StorageFile = "todo.json"
 
 func LoadTodos() ([]Todo, error) {
 	var todos []Todo
-
-	todos = append(todos, Todo{Title: "Buy Milk", Done: false})
-	todos = append(todos, Todo{Title: "Buy Eggs", Done: true})
-	todos = append(todos, Todo{Title: "Buy Bread", Done: false})
 
 	//if the first is true, the second will run
 	if _, err := os.Stat(StorageFile); os.IsNotExist(err) {
@@ -51,6 +47,33 @@ func SaveTodos(todo Todo) error {
 	data, err := json.MarshalIndent(todos, "", "  ")
 	//indent with 2 spaces
 
+	if err != nil {
+		return err
+	}
+
+	return os.WriteFile(StorageFile, data, 0644)
+}
+
+func RemoveTodos(index int) error {
+	todos, err := LoadTodos()
+	if err != nil {
+		return err
+	}
+
+	index--
+
+	if index >= len(todos) {
+		return errors.New("Index out of range")
+	}
+
+	for i := range todos {
+		if i == index {
+			todos = append(todos[:i], todos[i+1:]...)
+			break
+		}
+	}
+
+	data, err := json.MarshalIndent(todos, "", "  ")
 	if err != nil {
 		return err
 	}

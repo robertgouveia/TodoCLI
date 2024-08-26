@@ -26,6 +26,11 @@ var todoList = &cobra.Command{
 
 		if num == 0 {
 			for _, todo := range todos {
+				if todo.Done {
+					fmt.Print("\033[32m")
+				} else {
+					fmt.Print("\033[31m")
+				}
 				fmt.Println(todo.Title)
 			}
 
