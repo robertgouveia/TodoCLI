@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"errors"
 	"os"
+	"path/filepath"
 )
 
 type Todo struct {
@@ -11,7 +12,7 @@ type Todo struct {
 	Done  bool
 }
 
-var StorageFile = "todo.json"
+var StorageFile = filepath.Join(os.TempDir(), "todos.json")
 
 func LoadTodos() ([]Todo, error) {
 	var todos []Todo

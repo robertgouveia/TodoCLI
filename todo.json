@@ -1,10 +1,10 @@
 [
   {
-    "Title": "Do the washing",
-    "Done": true
+    "Title": "Example",
+    "Done": false
   },
   {
-    "Title": "Not done yet",
-    "Done": false
+    "Title": "Example2",
+    "Done": true
   }
 ]
